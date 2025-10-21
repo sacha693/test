@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瑞光沙舟｜催眠療癒</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        /* ... 您的所有 CSS 樣式代碼保持不變 ... */
+        body {
+            font-family: 'Noto Sans TC', sans-serif;
+            background-color: #f7f1e3;
+        }
+        .section-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .section-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .card-expandable .card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-in-out, padding 0.5s ease-in-out;
+        }
+        .card-expandable.active .card-content {
+            max-height: 500px;
+            padding-top: 1rem;
+        }
+      .header-with-bg {
+        /* 桌面版與預設樣式：固定背景 */
+        background-image: url('https://github.com/sacha693/sachalai-hypnosis/blob/main/indexBk.jpg.jpg?raw=true');
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-attachment: fixed; /* 預設為固定 */
+    }
+
+    /* 針對行動裝置/平板的修正：螢幕寬度小於或等於 1024px */
+    @media (max-width: 1024px) {
+        .header-with-bg {
+            /* 將固定效果改為隨內容滾動，提升行動裝置體驗 */
+            background-attachment: scroll; 
+        }
+    }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div id="nav-placeholder"></div>
+    
+    <header class="h-screen flex items-center justify-center text-center text-zinc-800 header-with-bg">
+    <div>
+        
+        <h1 class="text-2xl md:text-3xl font-extrabold tracking-tight leading-none mb-4 animate-fade-in-down">
+            走遍千山萬水<br>看盡世界美景<br>但您曾經走進過自己內心探索嗎？
+        </h1>
+        <a href="#about" class="inline-block py-3 px-8 text-lg font-bold rounded-full bg-amber-500 text-white hover:bg-amber-600 transition-all duration-300 transform hover:scale-105">
+            我是您的潛意識領航員
+        </a>
+    </div>
+</header>
+    
+    <main class="container mx-auto px-4 py-16 md:py-24 max-w-6xl">
+        </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script>
+        // 🌟 核心載入函式：使用 Fetch API 載入 HTML 檔案
+        function loadHTML(url, elementId, callback) {
+            fetch(url)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.text();
+                })
+                .then(data => {
+                    document.getElementById(elementId).innerHTML = data;
+                    if (callback) {
+                        callback();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error loading HTML snippet:', url, error);
+                });
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // 載入頁首導覽列
+            loadHTML('header.html', 'nav-placeholder', () => {
+                // 載入完成後，執行原本導覽列相關的 JS 程式碼
+                
+                // 導覽列下拉選單功能 - 開始你的旅程 (桌面版)
+                const journeyButtonDesktop = document.getElementById('journey-button-desktop');
+                const journeyMenuDesktop = document.getElementById('journey-menu-desktop');
+                const journeyContainerDesktop = document.getElementById('journey-dropdown-container-desktop');
+                
+                if (journeyButtonDesktop && journeyMenuDesktop) {
+                    journeyButtonDesktop.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        // 關閉其他選單
+                        const resourcesMenu = document.getElementById('resources-menu-desktop');
+                        if (resourcesMenu && !resourcesMenu.classList.contains('hidden')) {
+                            resourcesMenu.classList.add('hidden');
+                        }
+                        
+                        const isHidden = journeyMenuDesktop.classList.toggle('hidden');
+                        journeyButtonDesktop.setAttribute('aria-expanded', !isHidden);
+                    });
+                    
+                    document.addEventListener('click', (event) => {
+                        if (journeyContainerDesktop && !journeyContainerDesktop.contains(event.target)) {
+                            journeyMenuDesktop.classList.add('hidden');
+                            journeyButtonDesktop.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                }
+                
+                // 導覽列下拉選單功能 - 其它資源 (桌面版)
+                const resourcesButtonDesktop = document.getElementById('resources-button-desktop');
+                const resourcesMenuDesktop = document.getElementById('resources-menu-desktop');
+                const resourcesContainerDesktop = document.getElementById('resources-dropdown-container-desktop');
+                
+                if (resourcesButtonDesktop && resourcesMenuDesktop) {
+                    resourcesButtonDesktop.addEventListener('click', (event) => {
+                        event.stopPropagation();
+                        // 關閉其他選單
+                        const journeyMenu = document.getElementById('journey-menu-desktop');
+                        if (journeyMenu && !journeyMenu.classList.contains('hidden')) {
+                            journeyMenu.classList.add('hidden');
+                        }
+                        
+                        const isHidden = resourcesMenuDesktop.classList.toggle('hidden');
+                        resourcesButtonDesktop.setAttribute('aria-expanded', !isHidden);
+                    });
+                    
+                    document.addEventListener('click', (event) => {
+                        if (resourcesContainerDesktop && !resourcesContainerDesktop.contains(event.target)) {
+                            resourcesMenuDesktop.classList.add('hidden');
+                            resourcesButtonDesktop.setAttribute('aria-expanded', 'false');
+                        }
+                    });
+                }
+                
+                // 手機版選單切換功能
+                const mobileMenuButton = document.getElementById('mobile-menu-button');
+                const mobileMenu = document.getElementById('mobile-menu');
+                
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.addEventListener('click', () => {
+                        mobileMenu.classList.toggle('hidden');
+                    });
+                }
+                
+            });
+
+            // 載入頁尾
+            loadHTML('footer.html', 'footer-placeholder');
+
+            // 原始的非導覽列相關 JS 保持不變
+            
+            // 區塊滑入動畫效果
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.2
+            });
+            document.querySelectorAll('.section-reveal').forEach(section => {
+                observer.observe(section);
+            });
+
+            // 服務項目卡片展開效果
+            document.querySelectorAll('.card-expandable').forEach(card => {
+                const header = card.querySelector('h3');
+                const plusIcon = header.querySelector('span:last-child');
+                card.addEventListener('click', () => {
+                    const isActive = card.classList.toggle('active');
+                    if (isActive) {
+                        plusIcon.style.transform = 'rotate(45deg)';
+                    } else {
+                        plusIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
